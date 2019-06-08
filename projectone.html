@@ -1,0 +1,51 @@
+<html ng-app="myModule"> <!--Root element of the AngularJS application-->
+    <head>
+        <title>
+            My First SPA 
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script> <!--Adding CDN-->
+        <script src="projectone.js"></script> <!--Importing javascript file-->
+        
+    </head>
+    <body>
+        <div ng-controller="myController"> <!--controller directive attaches a controller class to the view-->
+            Search : <input type="text" placeholder="Search for Students" ng-model="searchText"/> <!--ng-model is used to bind the data in the model to the view presented to the user-->
+            <br><br>
+            <button ng-click="add()">Add Students</button><!--ng-click directive the function to be performed when an element is clicked-->
+            <br><br>
+            <table border="10" cellpadding="5" cellspacing="2">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Roll No</th>
+                            <th>Functions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="student in students | filter : {name : searchText} track by $index"> <!--ng-repeat is used as the foreach loop-->
+                          <!--$index is used to the index of an item repeated using ng-repeat directive-->
+                            <td>
+                            <span ng-bind="student.name" ng-if="!student.show"></span> <!--ng-bind replaces html element with the value or displaying the value inside html component as inner HTML-->
+                                <!--ng-if removes the html element if the expression evaluates to false-->
+                            <input type="text" name="name" ng-model="student.name" ng-if="student.show">
+                          </td>
+                          <td>
+                            <span ng-bind="student.age" ng-if="!student.show"></span>
+                            <input type="text" name="age" ng-model="student.age" ng-if="student.show">
+                          </td>
+                          <td>
+                                <span ng-bind="student.roll_no" ng-if="!student.show"></span>
+                                <input type="text" name="roll_no" ng-model="student.roll_no" ng-if="student.show">
+                              </td>
+                          <td>
+                              <button ng-click="change($index)" ng-if="!student.show">Edit</button>
+                              <button ng-click="change($index)" ng-if="student .show">Save</button>
+                              <button ng-click="delete($index)">Delete</button>
+                          </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </body>
+</html>
